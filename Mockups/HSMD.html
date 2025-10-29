@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Story Map - Sistema de Parqueaderos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        h1 {
+            color: #FF8C00;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .usm-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(5, minmax(250px, 1fr));
+            gap: 15px;
+            min-width: 1400px;
+        }
+        
+        .row-label {
+            font-weight: 600;
+            padding: 15px 10px;
+            display: flex;
+            align-items: center;
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        .persona-cell {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .persona {
+            background: linear-gradient(135deg, #e94d88 0%, #d4649c 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: 600;
+            transform: rotate(-2deg);
+            box-shadow: 0 4px 12px rgba(233, 77, 136, 0.3);
+        }
+        
+        .persona.blue {
+            background: linear-gradient(135deg, #4a90e2 0%, #5a9fe5 100%);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+        
+        .persona.purple {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+        }
+        
+        .epic-card {
+            background: linear-gradient(135deg, #b24ae8 0%, #9c3fd4 100%);
+            color: white;
+            padding: 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(178, 74, 232, 0.3);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #1dcce5 0%, #17b8d1 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(29, 204, 229, 0.3);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+        
+        .story-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .story-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .story-header {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+        }
+        
+        .story-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        
+        .tag {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .tag.design {
+            background: #b24ae8;
+        }
+        
+        .tag.develop {
+            background: #1dcce5;
+        }
+        
+        .tag.test {
+            background: #48bb78;
+        }
+        
+        .tag.high {
+            background: #f56565;
+        }
+        
+        .tag.medium {
+            background: #ed8936;
+        }
+        
+        .tag.low {
+            background: #48bb78;
+        }
+        
+        .story-time {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            font-size: 0.75em;
+            margin-bottom: 6px;
+        }
+        
+        .story-desc {
+            color: #555;
+            font-size: 0.8em;
+            line-height: 1.4;
+        }
+        
+        .release-divider {
+            grid-column: 1 / -1;
+            border-top: 3px dashed #1dcce5;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .release-label {
+            position: absolute;
+            left: 20px;
+            top: -12px;
+            background: white;
+            padding: 0 15px;
+            font-weight: 700;
+            color: #1dcce5;
+            font-size: 1.1em;
+        }
+        
+        .empty-cell {
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🅿️ User Story Mapping - Sistema de Gestión de Parqueaderos</h1>
+        
+        <div class="usm-grid">
+            <!-- Header Row -->
+            <div class="row-label">Persona</div>
+            <div class="persona-cell"><div class="persona">Cliente</div></div>
+            <div class="persona-cell"><div class="persona blue">Operador</div></div>
+            <div class="persona-cell"><div class="persona">Cliente</div></div>
+            <div class="persona-cell"><div class="persona purple">Administrador</div></div>
+            <div class="persona-cell"><div class="persona purple">Admin/Supervisor</div></div>
+            
+            <!-- Epic Row -->
+            <div class="row-label">Big Activity<br>(Epics)</div>
+            <div class="epic-card">Autenticación y Acceso</div>
+            <div class="epic-card">Control de Acceso</div>
+            <div class="epic-card">Gestión de Reservas</div>
+            <div class="epic-card">Configuración del Sistema</div>
+            <div class="epic-card">Reportes y Analytics</div>
+            
+            <!-- Features Row -->
+            <div class="row-label">Narrative Flow<br>(Features)</div>
+            <div class="feature-card">Login y Roles</div>
+            <div class="feature-card">Validación QR</div>
+            <div class="feature-card">Reservar y Pagar</div>
+            <div class="feature-card">Configurar Tarifas y Usuarios</div>
+            <div class="feature-card">Generar Reportes</div>
+            
+            <!-- Release 1 Stories -->
+            <div class="row-label">Release 1</div>
+            
+            <!-- Column 1: Login -->
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">HU01 - Iniciar Sesión</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 2-3d</div>
+                    <div class="story-desc">Login con correo/teléfono y contraseña</div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">HU02 - Gestión de Roles</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 3d</div>
+                    <div class="story-desc">Definir y asignar roles (Cliente, Operador, Admin, Supervisor)</div>
+                </div>
+            </div>
+            
+            <!-- Column 2: QR Validation -->
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">HU07 - Validar QR</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 3-4d</div>
+                    <div class="story-desc">Escanear y validar QR al ingreso/salida</div>
+                </div>
+            </div>
+            
+            <!-- Column 3: Reservations -->
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">HU03 - Consultar Disponibilidad</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 2d</div>
+                    <div class="story-desc">Ver cupos libres en tiempo real</div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">HU04 - Crear Reserva</div>
+                    <div class="story-tags">
+                        <span class="tag design">Design</span>
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 3-4d</div>
+                    <div class="story-desc">Reservar cupo con fecha/hora</div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">HU05 - Pagar Reserva</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 4-5d</div>
+                    <div class="story-desc">Pago con tarjeta o billetera digital</div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">HU06 - Generar QR</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 2d</div>
+                    <div class="story-desc">Crear y enviar código QR único</div>
+                </div>
+            </div>
+            
+            <!-- Column 4: Admin Config -->
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">HU10 - Configurar Sistema</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag high">High</span>
+                    </div>
+                    <div class="story-time">⏱️ 3-4d</div>
+                    <div class="story-desc">Configurar tarifas, horarios y usuarios</div>
+                </div>
+            </div>
+            
+            <!-- Column 5: Reports -->
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">HU11 - Generar Reportes</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag medium">Medium</span>
+                    </div>
+                    <div class="story-time">⏱️ 3-4d</div>
+                    <div class="story-desc">Reportes de ocupación y facturación</div>
+                </div>
+            </div>
+            
+            <!-- Release 2 Divider -->
+            <div class="release-divider">
+                <span class="release-label">Release 2</span>
+            </div>
+            
+            <!-- Release 2 Stories -->
+            <div class="row-label">Release 2</div>
+            
+            <div class="empty-cell"></div>
+            <div class="empty-cell"></div>
+            
+            <!-- Column 3: Advanced Reservation Management -->
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">HU08 - Gestionar Reservas</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag medium">Medium</span>
+                    </div>
+                    <div class="story-time">⏱️ 2-3d</div>
+                    <div class="story-desc">Consultar, modificar o cancelar reservas</div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">HU09 - Notificaciones</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag medium">Medium</span>
+                    </div>
+                    <div class="story-time">⏱️ 2d</div>
+                    <div class="story-desc">Enviar confirmación y recordatorios</div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">HU12 - Tiempo Límite Ingreso</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag low">Low</span>
+                    </div>
+                    <div class="story-time">⏱️ 1d</div>
+                    <div class="story-desc">Validar ventana de ingreso (±15-30 min)</div>
+                </div>
+            </div>
+            
+            <!-- Column 4: Advanced Admin -->
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">HU13 - Reprogramar Reservas</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag medium">Medium</span>
+                    </div>
+                    <div class="story-time">⏱️ 2d</div>
+                    <div class="story-desc">Anular o modificar reservas en casos excepcionales</div>
+                </div>
+            </div>
+            
+            <div class="empty-cell"></div>
+            
+            <!-- Release 3 Divider -->
+            <div class="release-divider">
+                <span class="release-label">Release 3 (Mejoras Futuras)</span>
+            </div>
+            
+            <!-- Release 3 Stories -->
+            <div class="row-label">Release 3</div>
+            
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">Multi-idioma</div>
+                    <div class="story-tags">
+                        <span class="tag design">Design</span>
+                        <span class="tag low">Low</span>
+                    </div>
+                    <div class="story-time">⏱️ 2d</div>
+                    <div class="story-desc">Soporte para múltiples idiomas</div>
+                </div>
+            </div>
+            
+            <div class="empty-cell"></div>
+            
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">Sistema de Fidelización</div>
+                    <div class="story-tags">
+                        <span class="tag develop">Develop</span>
+                        <span class="tag low">Low</span>
+                    </div>
+                    <div class="story-time">⏱️ 3-4d</div>
+                    <div class="story-desc">Puntos y descuentos para clientes frecuentes</div>
+                </div>
+            </div>
+            
+            <div class="empty-cell"></div>
+            
+            <div class="story-container">
+                <div class="story-card">
+                    <div class="story-header">Dashboard Analytics Avanzado</div>
+                    <div class="story-tags">
+                        <span class="tag design">Design</span>
+                        <span class="tag develop">Develop</span>
+                        <span class="tag low">Low</span>
+                    </div>
+                    <div class="story-time">⏱️ 4-5d</div>
+                    <div class="story-desc">Métricas predictivas y visualizaciones interactivas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
