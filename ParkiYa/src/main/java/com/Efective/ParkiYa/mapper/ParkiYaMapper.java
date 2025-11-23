@@ -15,6 +15,7 @@ import com.Efective.ParkiYa.domain.entity.NotificacionCorreo;
 import com.Efective.ParkiYa.domain.entity.NotificacionSMS;
 import com.Efective.ParkiYa.domain.entity.Operador;
 import com.Efective.ParkiYa.domain.entity.Pago;
+import com.Efective.ParkiYa.domain.entity.Parqueadero;
 import com.Efective.ParkiYa.domain.entity.Reporte;
 import com.Efective.ParkiYa.domain.entity.Reserva;
 import com.Efective.ParkiYa.domain.entity.Rol;
@@ -24,6 +25,7 @@ import com.Efective.ParkiYa.domain.entity.enums.TipoNotificacion;
 import com.Efective.ParkiYa.dto.CodigoQRDTO;
 import com.Efective.ParkiYa.dto.NotificacionDTO;
 import com.Efective.ParkiYa.dto.PagoDTO;
+import com.Efective.ParkiYa.dto.ParqueaderoDTO;
 import com.Efective.ParkiYa.dto.ReporteDTO;
 import com.Efective.ParkiYa.dto.ReservaDTO;
 import com.Efective.ParkiYa.dto.TarifaDTO;
@@ -109,8 +111,11 @@ public class ParkiYaMapper {
                 .total(reserva.getTotal())
                 .clienteId(reserva.getClienteId())
                 .tarifaId(reserva.getTarifaId())
+                .parqueaderoId(reserva.getParqueaderoId())
                 .codigoQrId(reserva.getCodigoQrId())
                 .pagoId(reserva.getPagoId())
+                .minutosConsumidos(reserva.getMinutosConsumidos())
+                .cargoAdicional(reserva.getCargoAdicional())
                 .build();
     }
 
@@ -128,8 +133,11 @@ public class ParkiYaMapper {
                 .total(dto.getTotal())
                 .clienteId(dto.getClienteId())
                 .tarifaId(dto.getTarifaId())
+                .parqueaderoId(dto.getParqueaderoId())
                 .codigoQrId(dto.getCodigoQrId())
                 .pagoId(dto.getPagoId())
+                .minutosConsumidos(dto.getMinutosConsumidos())
+                .cargoAdicional(dto.getCargoAdicional())
                 .build();
     }
 
@@ -174,6 +182,9 @@ public class ParkiYaMapper {
                 .fechaGeneracion(codigoQR.getFechaGeneracion())
                 .fechaExpiracion(codigoQR.getFechaExpiracion())
                 .reservaId(codigoQR.getReservaId())
+                .fechaEntradaValidada(codigoQR.getFechaEntradaValidada())
+                .fechaSalidaValidada(codigoQR.getFechaSalidaValidada())
+                .usosRegistrados(codigoQR.getUsosRegistrados())
                 .build();
     }
 
@@ -188,6 +199,9 @@ public class ParkiYaMapper {
                 .fechaGeneracion(dto.getFechaGeneracion())
                 .fechaExpiracion(dto.getFechaExpiracion())
                 .reservaId(dto.getReservaId())
+                .fechaEntradaValidada(dto.getFechaEntradaValidada())
+                .fechaSalidaValidada(dto.getFechaSalidaValidada())
+                .usosRegistrados(dto.getUsosRegistrados())
                 .build();
     }
 
@@ -240,6 +254,30 @@ public class ParkiYaMapper {
                 .tipo(dto.getTipo())
                 .fechaGeneracion(dto.getFechaGeneracion())
                 .contenido(dto.getContenido())
+                .build();
+    }
+
+    public ParqueaderoDTO toParqueaderoDto(Parqueadero parqueadero) {
+        if (parqueadero == null) {
+            return null;
+        }
+        return ParqueaderoDTO.builder()
+                .id(parqueadero.getId())
+                .nombre(parqueadero.getNombre())
+                .ubicacion(parqueadero.getUbicacion())
+                .capacidadTotal(parqueadero.getCapacidadTotal())
+                .build();
+    }
+
+    public Parqueadero toParqueaderoEntity(ParqueaderoDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        return Parqueadero.builder()
+                .id(dto.getId())
+                .nombre(dto.getNombre())
+                .ubicacion(dto.getUbicacion())
+                .capacidadTotal(dto.getCapacidadTotal())
                 .build();
     }
 

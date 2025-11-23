@@ -26,4 +26,7 @@ public class CodigoQR {
     private LocalDateTime fechaGeneracion;
     private LocalDateTime fechaExpiracion;
     private String reservaId;
+    private LocalDateTime fechaEntradaValidada;
+    private LocalDateTime fechaSalidaValidada;
+    private int usosRegistrados;
 }

@@ -15,4 +15,8 @@ public interface ReservaRepository extends MongoRepository<Reserva, String> {
     List<Reserva> findByEstado(EstadoReserva estado);
 
     List<Reserva> findByFecha(LocalDate fecha);
+
+    long countByParqueaderoIdAndFecha(String parqueaderoId, LocalDate fecha);
+
+    List<Reserva> findByParqueaderoIdAndFecha(String parqueaderoId, LocalDate fecha);
 }

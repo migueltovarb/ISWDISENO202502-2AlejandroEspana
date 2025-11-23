@@ -38,7 +38,13 @@ public class ReservaDTO {
 
     private String tarifaId;
 
+    private String parqueaderoId;
+
     private String codigoQrId;
 
     private String pagoId;
+
+    private long minutosConsumidos;
+
+    private double cargoAdicional;
 }

@@ -29,4 +29,10 @@ public class CodigoQRDTO {
 
     @NotNull
     private String reservaId;
+
+    private LocalDateTime fechaEntradaValidada;
+
+    private LocalDateTime fechaSalidaValidada;
+
+    private int usosRegistrados;
 }

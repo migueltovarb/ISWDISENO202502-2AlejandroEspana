@@ -30,6 +30,9 @@ public class Reserva {
     private double total;
     private String clienteId;
     private String tarifaId;
+    private String parqueaderoId;
     private String codigoQrId;
     private String pagoId;
+    private long minutosConsumidos;
+    private double cargoAdicional;
 }

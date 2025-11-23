@@ -16,6 +16,7 @@ import com.Efective.ParkiYa.dto.ReservaDTO;
 import com.Efective.ParkiYa.exception.BusinessException;
 import com.Efective.ParkiYa.exception.ResourceNotFoundException;
 import com.Efective.ParkiYa.mapper.ParkiYaMapper;
+import com.Efective.ParkiYa.repository.ParqueaderoRepository;
 import com.Efective.ParkiYa.repository.ReservaRepository;
 import com.Efective.ParkiYa.service.CodigoQRService;
 import com.Efective.ParkiYa.service.NotificacionService;
@@ -33,6 +34,7 @@ public class ReservaServiceImpl implements ReservaService {
     private final TarifaService tarifaService;
     private final CodigoQRService codigoQRService;
     private final NotificacionService notificacionService;
+    private final ParqueaderoRepository parqueaderoRepository;
 
     @Override
     public ReservaDTO crearReserva(ReservaDTO reservaDTO) {
@@ -40,6 +42,11 @@ public class ReservaServiceImpl implements ReservaService {
             throw new BusinessException("La hora de salida debe ser posterior a la hora de entrada");
         }
         Reserva reserva = mapper.toReservaEntity(reservaDTO);
+        if (reserva.getParqueaderoId() == null) {
+            throw new BusinessException("Debe indicar el parqueadero para la reserva");
+        }
+        parqueaderoRepository.findById(reserva.getParqueaderoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Parqueadero no encontrado"));
         reserva.setFecha(reservaDTO.getFecha() == null ? reserva.getHoraEntrada().toLocalDate() : reservaDTO.getFecha());
         reserva.setEstado(reserva.getEstado() == null ? EstadoReserva.PENDIENTE : reserva.getEstado());
         long minutos = Duration.between(reserva.getHoraEntrada(), reserva.getHoraSalida()).toMinutes();
@@ -47,6 +54,8 @@ public class ReservaServiceImpl implements ReservaService {
         if (reserva.getTarifaId() != null) {
             reserva.setTotal(tarifaService.calcularCosto(reserva.getTarifaId(), reserva.getDuracionMinutos()));
         }
+        reserva.setMinutosConsumidos(0);
+        reserva.setCargoAdicional(0);
         Reserva guardada = reservaRepository.save(reserva);
         CodigoQRDTO codigoQRDTO = codigoQRService.generarCodigo(guardada.getId());
         guardada.setCodigoQrId(codigoQRDTO.getId());
